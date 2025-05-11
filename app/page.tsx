@@ -196,31 +196,19 @@ function HomeContent() {
             <p className="text-gray-300 mb-6 max-w-xl text-center">
               {t('about.description')}
             </p>
-            <div className="flex gap-4 mb-6">
+            <div className="flex flex-col items-center gap-4">
               <a
-                href="/CV_2025_Lautaro_Tapia_ESP.pdf"
+                href={language === 'es' ? "/CV_2025_Lautaro_Tapia_ESP.pdf" : "/CV_2025_Lautaro_Tapia_ENG.pdf"}
                 download
                 className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
-                aria-label={`${t('about.cv')} (Español)`}
+                aria-label={`${t('about.cv')} (${language === 'es' ? 'Español' : 'English'})`}
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                 </svg>
-                {t('about.cv')} (ESP)
-              </a>
-              <a
-                href="/CV_2025_Lautaro_Tapia_ENG.pdf" 
-                download
-                className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
-                aria-label={`${t('about.cv')} (English)`}
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
-                </svg>
-                {t('about.cv')} (ENG)
+                {t('about.cv')} ({language === 'es' ? 'ESP' : 'ENG'})
               </a>
             </div>
-              {t('about.cv')}
             <div className="flex flex-wrap justify-center gap-3" role="list" aria-label="Habilidades personales">
               {(() => {
                 const skills = t('about.skills');
