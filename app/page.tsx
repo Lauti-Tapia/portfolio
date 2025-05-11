@@ -221,7 +221,6 @@ function HomeContent() {
               </a>
             </div>
               {t('about.cv')}
-            </a>
             <div className="flex flex-wrap justify-center gap-3" role="list" aria-label="Habilidades personales">
               {(() => {
                 const skills = t('about.skills');
