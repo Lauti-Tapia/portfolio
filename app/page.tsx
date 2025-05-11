@@ -196,15 +196,30 @@ function HomeContent() {
             <p className="text-gray-300 mb-6 max-w-xl text-center">
               {t('about.description')}
             </p>
-            <a
-              href="/CV_2025_Lautaro_Tapia_ESP.pdf"
-              download
-              className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold mb-6"
-              aria-label={t('about.cv')}
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
-              </svg>
+            <div className="flex gap-4 mb-6">
+              <a
+                href="/CV_2025_Lautaro_Tapia_ESP.pdf"
+                download
+                className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
+                aria-label={`${t('about.cv')} (Español)`}
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                {t('about.cv')} (ESP)
+              </a>
+              <a
+                href="/CV_2025_Lautaro_Tapia_ENG.pdf" 
+                download
+                className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
+                aria-label={`${t('about.cv')} (English)`}
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                {t('about.cv')} (ENG)
+              </a>
+            </div>
               {t('about.cv')}
             </a>
             <div className="flex flex-wrap justify-center gap-3" role="list" aria-label="Habilidades personales">
