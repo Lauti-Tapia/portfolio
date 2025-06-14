@@ -16,14 +16,14 @@ export default function Accordion({ title, children, defaultOpen = false }: Acco
     <div className="w-full border border-gray-700 rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 text-left bg-gray-800 hover:bg-gray-700 transition-colors flex justify-between items-center"
+        className="w-full px-4 sm:px-6 py-3 sm:py-4 text-left bg-gray-800 hover:bg-gray-700 transition-colors flex justify-between items-center"
         aria-expanded={isOpen}
         aria-controls="accordion-content"
       >
-        <span className="font-medium text-white">{title}</span>
+        <span className="font-medium text-white text-sm sm:text-base">{title}</span>
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-400"
+          className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 flex-shrink-0"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -48,7 +48,7 @@ export default function Accordion({ title, children, defaultOpen = false }: Acco
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div id="accordion-content" className="px-6 py-4 bg-gray-900 text-gray-300">
+            <div id="accordion-content" className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-900 text-gray-300">
               {children}
             </div>
           </motion.div>

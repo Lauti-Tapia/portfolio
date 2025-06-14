@@ -148,25 +148,25 @@ function HomeContent() {
           </svg>
         </div>
         {/* Contenido principal del hero */}
-        <div className="relative z-10 flex flex-col items-center justify-center w-full pt-24 pb-16 text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full pt-24 pb-16 text-center px-4 sm:px-6">
           {(() => {
             const heroTitle = t('hero.title'); // Ej: "Hola, soy Lautaro Tapia" o "Hi, I'm Lautaro Tapia"
             const name = 'Lautaro Tapia';
             const [before, after] = heroTitle.split(name);
             return (
-              <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-left text-white drop-shadow-lg leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 text-center text-white drop-shadow-lg leading-tight max-w-4xl mx-auto">
                 {before}
                 <span className="text-blue-500">{name}</span>
                 {after}
               </h1>
             );
           })()}
-          <p className="text-2xl md:text-3xl text-blue-100 mb-8 font-light drop-shadow">
-            Data Analyst & Data Engineer
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-blue-100 mb-6 sm:mb-8 font-light drop-shadow max-w-2xl mx-auto px-2">
+            {t('hero.subtitle')}
           </p>
           <a
             href="#proyectos"
-            className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg"
+            className="bg-blue-600 hover:bg-blue-700 transition px-6 sm:px-8 py-3 sm:py-4 rounded-full text-white font-semibold text-base sm:text-lg shadow-lg"
           >
             Ver proyectos
           </a>
@@ -177,17 +177,17 @@ function HomeContent() {
       <motion.section
         id="sobremi"
         ref={sobreMiRef}
-        className="flex justify-center py-20 px-6 text-white"
+        className="flex justify-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 text-white"
         aria-label="Sección sobre mí"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-2xl w-full flex flex-col items-center border border-gray-800">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-400">{t('about.title')}</h2>
+        <div className="bg-[#181c24] shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10 max-w-2xl w-full flex flex-col items-center border border-gray-800">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-blue-400">{t('about.title')}</h2>
           <div className="flex flex-col items-center">
-            <div className="relative w-32 h-32 mb-4">
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 mb-4">
               <Image
                 src="/avatar.jpg"
                 alt="Foto de perfil de Lautaro Tapia"
@@ -196,37 +196,36 @@ function HomeContent() {
                 priority
               />
             </div>
-            <p className="text-gray-300 mb-6 max-w-xl text-center">
+            <p className="text-gray-300 mb-4 sm:mb-6 max-w-xl text-center text-sm sm:text-base px-2">
               {t('about.description')}
             </p>
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3 sm:gap-4">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                {(() => {
+                  const skills = t('about.skills');
+                  return Array.isArray(skills)
+                    ? skills.map((skill: string, index: number) => (
+                        <span
+                          key={index}
+                          className="bg-blue-600/20 text-blue-300 px-3 py-1 rounded-full text-xs sm:text-sm border border-blue-500/30"
+                        >
+                          {skill}
+                        </span>
+                      ))
+                    : null;
+                })()}
+              </div>
               <a
-                href={language === 'es' ? "/CV_2025_Lautaro_Tapia_ESP.pdf" : "/CV_2025_Lautaro_Tapia_EN.pdf"}
+                href="/cv-lautaro-tapia.pdf"
                 download
-                className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
+                className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-semibold text-sm sm:text-base"
                 aria-label={`${t('about.cv')} (${language === 'es' ? 'Español' : 'English'})`}
               >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                 </svg>
                 {t('about.cv')} ({language === 'es' ? 'ESP' : 'EN'})
               </a>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3" role="list" aria-label="Habilidades personales">
-              {(() => {
-                const skills = t('about.skills');
-                return Array.isArray(skills)
-                  ? (skills as string[]).map((skill) => (
-                      <span
-                        key={skill}
-                        className="bg-blue-800/50 text-sm px-4 py-1 rounded-full border border-blue-600"
-                        role="listitem"
-                      >
-                        {skill}
-                      </span>
-                    ))
-                  : null;
-              })()}
             </div>
           </div>
         </div>
@@ -236,33 +235,34 @@ function HomeContent() {
       <motion.section
         id="background"
         ref={backgroundRef}
-        className="flex justify-center py-20 px-6 text-white"
+        className="flex justify-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 text-white"
+        aria-label="Sección de background"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-6xl w-full border border-gray-800">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-blue-400 text-center">{t('background.title')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-[#181c24] shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10 max-w-6xl w-full border border-gray-800">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-blue-400 text-center">{t('background.title')}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Tarjeta 1 - Formación */}
-            <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-xl font-semibold mb-2">🎓 {t('background.title')}</h3>
-              <p className="text-gray-400 text-sm">
+            <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">🎓 {t('background.title')}</h3>
+              <p className="text-gray-400 text-xs sm:text-sm">
                 {t('background.education')}
               </p>
             </div>
             {/* Tarjeta 2 - Tecnologías */}
-            <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-xl font-semibold mb-2">💻 Tecnologías</h3>
-              <p className="text-gray-400 text-sm">
+            <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">💻 Tecnologías</h3>
+              <p className="text-gray-400 text-xs sm:text-sm">
                 {t('background.technologies')}
               </p>
             </div>
             {/* Tarjeta 3 - Experiencia */}
-            <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-xl font-semibold mb-2">📊 Experiencia</h3>
-              <p className="text-gray-400 text-sm">
+            <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">📊 Experiencia</h3>
+              <p className="text-gray-400 text-xs sm:text-sm">
                 {t('background.experience')}
               </p>
             </div>
@@ -274,14 +274,14 @@ function HomeContent() {
       <motion.section
         id="proyectos"
         ref={proyectosRef}
-        className="flex justify-center py-20 px-6 text-white"
+        className="flex justify-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 text-white"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-5xl w-full border border-gray-800 flex flex-col items-center relative">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-blue-400">{t('projects.title')}</h2>
+        <div className="bg-[#181c24] shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10 max-w-5xl w-full border border-gray-800 flex flex-col items-center relative">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-blue-400 px-2">{t('projects.title')}</h2>
           {/* Carrusel de proyectos */}
           {(() => {
             // Definir los proyectos, Civi siempre primero
@@ -290,9 +290,9 @@ function HomeContent() {
                 key: 'civi',
                 title: language === 'es' ? 'Civi – Creador de CV con IA' : 'Civi – CV Creator with AI',
                 description: (
-                  <div className="mb-8">
+                  <div className="mb-4 sm:mb-6 md:mb-8">
                     <Accordion title={language === 'es' ? 'Descripción del proyecto' : 'Show project description'}>
-                      <div className="text-gray-400 space-y-3">
+                      <div className="text-gray-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
                         {language === 'es' ? (
                           <>
                             <p>
@@ -329,7 +329,7 @@ function HomeContent() {
                   </div>
                 ),
                 preview: (
-                  <div className="w-full aspect-video rounded-lg overflow-hidden shadow-lg mb-6" style={{height: '600px'}}>
+                  <div className="w-full rounded-lg overflow-hidden shadow-lg mb-4 sm:mb-6" style={{height: 'min(60vh, 400px)'}}>
                     <iframe
                       src="https://civi-cv-creator.vercel.app/"
                       allowFullScreen
@@ -343,10 +343,10 @@ function HomeContent() {
                     href="https://civi-cv-creator.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
                   >
                     {language === 'es' ? 'Visitar Civi' : 'Visit Civi'}
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -357,22 +357,22 @@ function HomeContent() {
                 key: 'powerbi',
                 title: t('projects.powerbi.title'),
                 description: (
-                  <div className="mb-8">
+                  <div className="mb-4 sm:mb-6 md:mb-8">
                     <Accordion title={t('projects.powerbi.description.button')}>
-                      <div className="text-gray-400 space-y-3">
+                      <div className="text-gray-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
                         <p>
                           <b>Descripción del proyecto y técnica utilizada:</b> Como parte de este proyecto realicé, por primera vez, una experiencia completa de web scraping para obtener datos históricos del fútbol argentino. Utilicé Python, Selenium y BeautifulSoup para automatizar la navegación por el sitio fbref.com y descargar, año por año, las tablas estadísticas de la Liga Profesional Argentina entre 2016 y 2024. Toda esa información fue procesada automáticamente y exportada en archivos .csv, que luego utilicé como fuente principal en Power BI para desarrollar visualizaciones interactivas. El proceso completo lo realicé en un día, y me permitió vincular programación con análisis visual de datos en un contexto real.
                         </p>
                         <p>
                           <b>📊 Análisis comparativo de los dashboards:</b> Los informes están divididos en dos vistas principales:
-                          <ul className="list-disc list-inside ml-6 mt-2">
+                          <ul className="list-disc list-inside ml-4 sm:ml-6 mt-2 space-y-1">
                             <li>Los cinco grandes del fútbol argentino</li>
                             <li>El resto de los equipos</li>
                           </ul>
                         </p>
                         <div>
                           <b>🔵 Visualización de los 5 grandes</b>
-                          <ul className="list-disc list-inside ml-6 mt-2">
+                          <ul className="list-disc list-inside ml-4 sm:ml-6 mt-2 space-y-1">
                             <li>Boca Juniors y River Plate lideran en cantidad de partidos ganados entre 2016 y 2024.</li>
                             <li>Se observa una tendencia estable y competitiva en el tiempo en las posiciones de ambos.</li>
                             <li>San Lorenzo e Independiente muestran mayor irregularidad, con altibajos en su rendimiento.</li>
@@ -381,7 +381,7 @@ function HomeContent() {
                         </div>
                         <div>
                           <b>🟡 Visualización de los no grandes</b>
-                          <ul className="list-disc list-inside ml-6 mt-2">
+                          <ul className="list-disc list-inside ml-4 sm:ml-6 mt-2 space-y-1">
                             <li>Estudiantes, Defensa y Justicia y Godoy Cruz son los equipos con mejor desempeño acumulado en partidos ganados.</li>
                             <li>La diversidad de trayectorias es mucho mayor: se observan equipos que s&oacute;lo estuvieron en algunos años y otros con presencia sostenida.</li>
                             <li>Algunos equipos como Atlético Tucumán o Lanús mantuvieron una regularidad destacable en posiciones, aunque sin competir directamente con los grandes.</li>
@@ -393,7 +393,7 @@ function HomeContent() {
                   </div>
                 ),
                 preview: (
-                  <div className="w-full aspect-[5/1] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-lg mb-6" style={{height: '400px'}}>
+                  <div className="w-full rounded-lg overflow-hidden shadow-lg mb-4 sm:mb-6" style={{height: 'min(50vh, 350px)'}}>
                     <iframe
                       src="https://app.powerbi.com/reportEmbed?reportId=fd61d2df-2d2e-4191-9e04-2a5a131a9ae5&autoAuth=true&ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&actionBarEnabled=true&reportCopilotInEmbed=true"
                       allowFullScreen
@@ -407,17 +407,17 @@ function HomeContent() {
                     href="https://app.powerbi.com/links/aSwFdI8zJz?ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&pbi_source=linkShare"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
                   >
                     {t('projects.powerbi.link')}
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 ),
                 disclaimer: (
-                  <p className="text-gray-500 text-xs mt-4 text-center">
+                  <p className="text-gray-500 text-xs mt-3 sm:mt-4 text-center px-2">
                     {t('projects.powerbi.disclaimer')}
                   </p>
                 )
@@ -428,10 +428,10 @@ function HomeContent() {
                 {/* Botón izquierdo */}
                 <button
                   onClick={goPrev}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-700 transition z-10"
                   aria-label="Previous project"
                 >
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -442,12 +442,12 @@ function HomeContent() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -40 }}
                   transition={{ duration: 0.4, ease: 'easeInOut' }}
-                  className="bg-[#23283a] rounded-xl p-6 shadow-lg border border-gray-700 flex flex-col w-full max-w-4xl mx-auto"
+                  className="bg-[#23283a] rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-lg border border-gray-700 flex flex-col w-full max-w-4xl mx-auto"
                 >
-                  <h3 className="text-xl font-semibold mb-4 text-center">{projects[currentProject].title}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center px-2">{projects[currentProject].title}</h3>
                   {projects[currentProject].description}
                   {projects[currentProject].preview}
-                  <div className="flex justify-center mt-auto">
+                  <div className="flex justify-center mt-4 sm:mt-auto">
                     {projects[currentProject].action}
                   </div>
                   {projects[currentProject].disclaimer}
@@ -455,10 +455,10 @@ function HomeContent() {
                 {/* Botón derecho */}
                 <button
                   onClick={goNext}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-700 transition z-10"
                   aria-label="Next project"
                 >
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -472,7 +472,7 @@ function HomeContent() {
       <motion.section
         id="contacto"
         ref={contactoRef}
-        className="bg-[#0c0f1a] text-white py-16 px-6"
+        className="bg-[#0c0f1a] text-white py-12 sm:py-16 px-4 sm:px-6"
         aria-label="Sección de contacto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -480,17 +480,17 @@ function HomeContent() {
         transition={{ duration: 0.7 }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-6">{t('contact.title')}</h2>
-          <p className="text-gray-400 mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">{t('contact.title')}</h2>
+          <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base px-2">
             {t('contact.subtitle')}
           </p>
           <ContactForm />
-          <div className="mt-10 flex justify-center gap-6" role="navigation" aria-label="Enlaces a redes sociales">
+          <div className="mt-8 sm:mt-10 flex justify-center gap-4 sm:gap-6" role="navigation" aria-label="Enlaces a redes sociales">
             <a
               href="https://github.com/Lauti-Tapia"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition"
+              className="text-gray-400 hover:text-white transition text-sm sm:text-base"
               aria-label="Visitar mi perfil de GitHub"
             >
               GitHub
@@ -499,7 +499,7 @@ function HomeContent() {
               href="https://www.linkedin.com/in/lautaro-tapia-9012091b8/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition"
+              className="text-gray-400 hover:text-white transition text-sm sm:text-base"
               aria-label="Visitar mi perfil de LinkedIn"
             >
               LinkedIn
@@ -509,9 +509,9 @@ function HomeContent() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="bg-[#0a0a23] text-white py-8 px-6 text-center" role="contentinfo">
+      <footer className="bg-[#0a0a23] text-white py-6 sm:py-8 px-4 sm:px-6 text-center" role="contentinfo">
         <div className="max-w-6xl mx-auto">
-          <p className="text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-400">
             © {new Date().getFullYear()} Lautaro Tapia - {t('footer.rights')}
           </p>
         </div>
