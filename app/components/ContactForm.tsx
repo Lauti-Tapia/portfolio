@@ -16,6 +16,8 @@ interface FormErrors {
   message?: string;
 }
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function ContactForm() {
   const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
@@ -29,17 +31,17 @@ export default function ContactForm() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
     if (!formData.name.trim()) {
-      newErrors.name = t('contact.error.name');
+      newErrors.name = t('contact.error.name') as string;
     }
     if (!formData.email.trim()) {
-      newErrors.email = t('contact.error.email');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t('contact.error.emailInvalid');
+      newErrors.email = t('contact.error.email') as string;
+    } else if (!EMAIL_REGEX.test(formData.email)) {
+      newErrors.email = t('contact.error.emailInvalid') as string;
     }
     if (!formData.message.trim()) {
-      newErrors.message = t('contact.error.message');
+      newErrors.message = t('contact.error.message') as string;
     } else if (formData.message.length < 10) {
-      newErrors.message = t('contact.error.messageLength');
+      newErrors.message = t('contact.error.messageLength') as string;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -78,29 +80,31 @@ export default function ContactForm() {
         }}
       >
         {/* Status Messages */}
-        {submitStatus === 'success' && (
-          <div 
-            className="col-span-1 md:col-span-2 p-4 mb-4 bg-green-500/20 border border-green-500 rounded text-green-500 text-center flex items-center justify-center gap-2"
-            role="alert"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-            {t('contact.success')}
-          </div>
-        )}
-        {submitStatus === 'error' && (
-          <div 
-            className="col-span-1 md:col-span-2 p-4 mb-4 bg-red-500/20 border border-red-500 rounded text-red-500 text-center flex items-center justify-center gap-2"
-            role="alert"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-            {t('contact.error')}
-          </div>
-        )}
+        <div className="col-span-1 md:col-span-2" aria-live="polite">
+          {submitStatus === 'success' && (
+            <div
+              className="p-4 mb-4 bg-green-500/20 border border-green-500 rounded text-green-500 text-center flex items-center justify-center gap-2"
+              role="alert"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              {t('contact.success') as string}
+            </div>
+          )}
+          {submitStatus === 'error' && (
+            <div
+              className="p-4 mb-4 bg-red-500/20 border border-red-500 rounded text-red-500 text-center flex items-center justify-center gap-2"
+              role="alert"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              {t('contact.error') as string}
+            </div>
+          )}
+        </div>
 
         {/* Name Field */}
         <div className="col-span-1 md:col-span-2">
           <label htmlFor="name" className="block text-sm text-gray-400 mb-1">
-            {t('contact.name')}
+            {t('contact.name') as string}
           </label>
           <input
             id="name"
@@ -111,7 +115,7 @@ export default function ContactForm() {
             className={`w-full p-3 bg-gray-800 rounded text-white placeholder-gray-400 border focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
               errors.name ? 'border-red-500' : 'border-gray-700'
             }`}
-            placeholder={t('contact.namePlaceholder') || t('contact.name')}
+            placeholder={(t('contact.namePlaceholder') as string) || (t('contact.name') as string)}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? 'name-error' : undefined}
           />
@@ -125,7 +129,7 @@ export default function ContactForm() {
         {/* Email Field */}
         <div className="col-span-1 md:col-span-2">
           <label htmlFor="email" className="block text-sm text-gray-400 mb-1">
-            {t('contact.email')}
+            {t('contact.email') as string}
           </label>
           <input
             id="email"
@@ -136,7 +140,7 @@ export default function ContactForm() {
             className={`w-full p-3 bg-gray-800 rounded text-white placeholder-gray-400 border focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
               errors.email ? 'border-red-500' : 'border-gray-700'
             }`}
-            placeholder={t('contact.emailPlaceholder') || t('contact.email')}
+            placeholder={(t('contact.emailPlaceholder') as string) || (t('contact.email') as string)}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
@@ -150,7 +154,7 @@ export default function ContactForm() {
         {/* Message Field */}
         <div className="col-span-1 md:col-span-2">
           <label htmlFor="message" className="block text-sm text-gray-400 mb-1">
-            {t('contact.message')}
+            {t('contact.message') as string}
           </label>
           <textarea
             id="message"
@@ -161,7 +165,7 @@ export default function ContactForm() {
             className={`w-full p-3 bg-gray-800 rounded text-white placeholder-gray-400 border focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
               errors.message ? 'border-red-500' : 'border-gray-700'
             }`}
-            placeholder={t('contact.messagePlaceholder') || t('contact.message')}
+            placeholder={(t('contact.messagePlaceholder') as string) || (t('contact.message') as string)}
             aria-invalid={!!errors.message}
             aria-describedby={errors.message ? 'message-error' : undefined}
           />

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import MobileMenu from './components/MobileMenu';
 import ContactForm from './components/ContactForm';
 import Accordion from './components/Accordion';
 import { motion } from 'framer-motion';
-import { useLanguage, LanguageProvider } from './context/LanguageContext';
+import { useLanguage } from './context/LanguageContext';
 
 function HomeContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,11 +22,11 @@ function HomeContent() {
   const contactoRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
-    { href: '#inicio', label: t('nav.home'), ref: inicioRef },
-    { href: '#sobremi', label: t('nav.about'), ref: sobreMiRef },
-    { href: '#background', label: t('nav.background'), ref: backgroundRef },
-    { href: '#proyectos', label: t('nav.projects'), ref: proyectosRef },
-    { href: '#contacto', label: t('nav.contact'), ref: contactoRef },
+    { href: '#inicio', label: t('nav.home') as string, ref: inicioRef },
+    { href: '#sobremi', label: t('nav.about') as string, ref: sobreMiRef },
+    { href: '#background', label: t('nav.background') as string, ref: backgroundRef },
+    { href: '#proyectos', label: t('nav.projects') as string, ref: proyectosRef },
+    { href: '#contacto', label: t('nav.contact') as string, ref: contactoRef },
   ];
 
   const handleNavClick = (ref: React.RefObject<HTMLDivElement>) => (e: React.MouseEvent) => {
@@ -35,11 +35,10 @@ function HomeContent() {
     setIsMobileMenuOpen(false);
   };
 
-  // Agrega scroll-behavior: smooth al body
-  type GlobalAny = any;
-  if (typeof window !== 'undefined') {
+  // Add smooth scroll behavior on mount
+  useEffect(() => {
     document.body.style.scrollBehavior = 'smooth';
-  }
+  }, []);
 
   return (
     <main className="pt-10 bg-[#0a0a23] min-h-screen">
@@ -149,7 +148,7 @@ function HomeContent() {
         {/* Contenido principal del hero */}
         <div className="relative z-10 flex flex-col items-center justify-center w-full pt-24 pb-16 text-center">
           {(() => {
-            const heroTitle = t('hero.title'); // Ej: "Hola, soy Lautaro Tapia" o "Hi, I'm Lautaro Tapia"
+            const heroTitle = t('hero.title') as string; // Ej: "Hola, soy Lautaro Tapia" o "Hi, I'm Lautaro Tapia"
             const name = 'Lautaro Tapia';
             const [before, after] = heroTitle.split(name);
             return (
@@ -184,7 +183,7 @@ function HomeContent() {
         transition={{ duration: 0.7 }}
       >
         <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-2xl w-full flex flex-col items-center border border-gray-800">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-400">{t('about.title')}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-400">{t('about.title') as string}</h2>
           <div className="flex flex-col items-center">
             <div className="relative w-32 h-32 mb-4">
               <Image
@@ -196,19 +195,19 @@ function HomeContent() {
               />
             </div>
             <p className="text-gray-300 mb-6 max-w-xl text-center">
-              {t('about.description')}
+              {t('about.description') as string}
             </p>
             <div className="flex flex-col items-center gap-4">
               <a
                 href={language === 'es' ? "/CV_2025_Lautaro_Tapia_ESP.pdf" : "/CV_2025_Lautaro_Tapia_EN.pdf"}
                 download
                 className="inline-flex items-center bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-full text-white font-semibold"
-                aria-label={`${t('about.cv')} (${language === 'es' ? 'Español' : 'English'})`}
+                aria-label={`${t('about.cv') as string} (${language === 'es' ? 'Español' : 'English'})`}
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                 </svg>
-                {t('about.cv')} ({language === 'es' ? 'ESP' : 'EN'})
+                {t('about.cv') as string} ({language === 'es' ? 'ESP' : 'EN'})
               </a>
             </div>
             <div className="flex flex-wrap justify-center gap-3" role="list" aria-label="Habilidades personales">
@@ -242,27 +241,27 @@ function HomeContent() {
         transition={{ duration: 0.7 }}
       >
         <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-6xl w-full border border-gray-800">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-blue-400 text-center">{t('background.title')}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-blue-400 text-center">{t('background.title') as string}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Tarjeta 1 - Formación */}
             <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-xl font-semibold mb-2">🎓 {t('background.title')}</h3>
+              <h3 className="text-xl font-semibold mb-2">🎓 {t('background.title') as string}</h3>
               <p className="text-gray-400 text-sm">
-                {t('background.education')}
+                {t('background.education') as string}
               </p>
             </div>
             {/* Tarjeta 2 - Tecnologías */}
             <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
               <h3 className="text-xl font-semibold mb-2">💻 Tecnologías</h3>
               <p className="text-gray-400 text-sm">
-                {t('background.technologies')}
+                {t('background.technologies') as string}
               </p>
             </div>
             {/* Tarjeta 3 - Experiencia */}
             <div className="bg-[#23283a] p-6 rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
               <h3 className="text-xl font-semibold mb-2">📊 Experiencia</h3>
               <p className="text-gray-400 text-sm">
-                {t('background.experience')}
+                {t('background.experience') as string}
               </p>
             </div>
           </div>
@@ -280,7 +279,7 @@ function HomeContent() {
         transition={{ duration: 0.7 }}
       >
         <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-5xl w-full border border-gray-800 flex flex-col items-center relative">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-blue-400">{t('projects.title')}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-blue-400">{t('projects.title') as string}</h2>
           {/* Carrusel de proyectos */}
           {(() => {
             // Definir los proyectos, Civi siempre primero
@@ -354,10 +353,10 @@ function HomeContent() {
               },
               {
                 key: 'powerbi',
-                title: t('projects.powerbi.title'),
+                title: t('projects.powerbi.title') as string,
                 description: (
                   <div className="mb-8">
-                    <Accordion title={t('projects.powerbi.description.button')}>
+                    <Accordion title={t('projects.powerbi.description.button') as string}>
                       <div className="text-gray-400 space-y-3">
                         <p>
                           <b>Descripción del proyecto y técnica utilizada:</b> Como parte de este proyecto realicé, por primera vez, una experiencia completa de web scraping para obtener datos históricos del fútbol argentino. Utilicé Python, Selenium y BeautifulSoup para automatizar la navegación por el sitio fbref.com y descargar, año por año, las tablas estadísticas de la Liga Profesional Argentina entre 2016 y 2024. Toda esa información fue procesada automáticamente y exportada en archivos .csv, que luego utilicé como fuente principal en Power BI para desarrollar visualizaciones interactivas. El proceso completo lo realicé en un día, y me permitió vincular programación con análisis visual de datos en un contexto real.
@@ -397,7 +396,7 @@ function HomeContent() {
                       src="https://app.powerbi.com/reportEmbed?reportId=fd61d2df-2d2e-4191-9e04-2a5a131a9ae5&autoAuth=true&ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&actionBarEnabled=true&reportCopilotInEmbed=true"
                       allowFullScreen
                       className="w-full h-full border-0"
-                      title={t('projects.powerbi.iframe.title')}
+                      title={t('projects.powerbi.iframe.title') as string}
                     ></iframe>
                   </div>
                 ),
@@ -408,7 +407,7 @@ function HomeContent() {
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
                   >
-                    {t('projects.powerbi.link')}
+                    {t('projects.powerbi.link') as string}
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
@@ -417,7 +416,7 @@ function HomeContent() {
                 ),
                 disclaimer: (
                   <p className="text-gray-500 text-xs mt-4 text-center">
-                    {t('projects.powerbi.disclaimer')}
+                    {t('projects.powerbi.disclaimer') as string}
                   </p>
                 )
               }
@@ -482,9 +481,9 @@ function HomeContent() {
         transition={{ duration: 0.7 }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-6">{t('contact.title')}</h2>
+          <h2 className="text-3xl font-semibold mb-6">{t('contact.title') as string}</h2>
           <p className="text-gray-400 mb-8">
-            {t('contact.subtitle')}
+            {t('contact.subtitle') as string}
           </p>
           <ContactForm />
           <div className="mt-10 flex justify-center gap-6" role="navigation" aria-label="Enlaces a redes sociales">
@@ -514,7 +513,7 @@ function HomeContent() {
       <footer className="bg-[#0a0a23] text-white py-8 px-6 text-center" role="contentinfo">
         <div className="max-w-6xl mx-auto">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Lautaro Tapia - {t('footer.rights')}
+            © {new Date().getFullYear()} Lautaro Tapia - {t('footer.rights') as string}
           </p>
         </div>
       </footer>
@@ -523,9 +522,5 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return (
-    <LanguageProvider>
-      <HomeContent />
-    </LanguageProvider>
-  );
+  return <HomeContent />;
 }

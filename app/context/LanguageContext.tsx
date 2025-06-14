@@ -1,16 +1,16 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Language = 'es' | 'en';
 
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
-  t: (key: string) => string;
+  t: (key: string) => string | string[];
 }
 
-const translations = {
+const translations: Record<Language, Record<string, string | string[]>> = {
   es: {
     'nav.home': 'Inicio',
     'nav.about': 'Sobre mí',
@@ -31,6 +31,27 @@ const translations = {
     'projects.title': 'Proyectos',
     'projects.powerbi.title': 'Análisis interactivo de la Liga Profesional Argentina (2016–2024) utilizando Web Scraping y Power BI',
     'projects.powerbi.description.button': 'Ver descripción del proyecto',
+    'projects.powerbi.description.title': 'Detalles del proyecto',
+    'projects.powerbi.description.technical.title': 'Aspectos técnicos',
+    'projects.powerbi.description.technical.content': 'El panel se desarrolló con Python para el scraping y Power BI para la visualización.',
+    'projects.powerbi.description.analysis.title': 'Análisis de datos',
+    'projects.powerbi.description.analysis.intro': 'Principales hallazgos del período analizado:',
+    'projects.powerbi.description.analysis.bigFive.title': 'Rendimiento de los cinco grandes',
+    'projects.powerbi.description.analysis.bigFive.points': [
+      'Boca Juniors y River Plate lideraron la mayoría de las temporadas.',
+      'Racing mantuvo un crecimiento sostenido.',
+      'San Lorenzo mostró resultados irregulares.',
+      'Independiente alternó buenas y malas campañas.',
+      'La diferencia de gol fue determinante.',
+    ],
+    'projects.powerbi.description.analysis.others.title': 'Otros equipos destacados',
+    'projects.powerbi.description.analysis.others.points': [
+      'Vélez y Estudiantes lograron buenas campañas.',
+      'Huracán sorprendió en varios torneos.',
+      'Lanús se mantuvo competitivo.',
+      'Colón tuvo momentos de alto rendimiento.',
+      'La lucha por la permanencia fue pareja.',
+    ],
     'projects.powerbi.iframe.title': 'Dashboard Power BI',
     'projects.powerbi.disclaimer': 'El panel se carga desde Power BI y puede solicitar inicio de sesión. Es seguro, es una vista embebida desde una fuente oficial.',
     'projects.powerbi.link': 'Ver en Power BI',
@@ -79,6 +100,27 @@ const translations = {
     'projects.title': 'Projects',
     'projects.powerbi.title': 'Interactive Analysis of the Argentine Professional League (2016–2024) using Web Scraping and Power BI',
     'projects.powerbi.description.button': 'Show project description',
+    'projects.powerbi.description.title': 'Project details',
+    'projects.powerbi.description.technical.title': 'Technical aspects',
+    'projects.powerbi.description.technical.content': 'The dashboard was built using Python for scraping and Power BI for visualization.',
+    'projects.powerbi.description.analysis.title': 'Data analysis',
+    'projects.powerbi.description.analysis.intro': 'Key findings for the period:',
+    'projects.powerbi.description.analysis.bigFive.title': 'Performance of the top five',
+    'projects.powerbi.description.analysis.bigFive.points': [
+      'Boca Juniors and River Plate dominated most seasons.',
+      'Racing showed consistent growth.',
+      'San Lorenzo had irregular results.',
+      'Independiente varied greatly between seasons.',
+      'Goal difference was decisive.',
+    ],
+    'projects.powerbi.description.analysis.others.title': 'Other notable teams',
+    'projects.powerbi.description.analysis.others.points': [
+      'Vélez and Estudiantes achieved strong campaigns.',
+      'Huracán surprised in several tournaments.',
+      'Lanús remained competitive.',
+      'Colón displayed high-level moments.',
+      'The relegation battle was very close.',
+    ],
     'projects.powerbi.iframe.title': 'Power BI Dashboard',
     'projects.powerbi.disclaimer': 'The dashboard loads from Power BI and may request login. It is safe, it is an embedded view from an official source.',
     'projects.powerbi.link': 'View in Power BI',
@@ -114,14 +156,24 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('es');
 
+  useEffect(() => {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'es' || saved === 'en') {
+      setLanguage(saved);
+    }
+  }, []);
+
   const toggleLanguage = () => {
-    setLanguage(prev => (prev === 'es' ? 'en' : 'es'));
+    setLanguage(prev => {
+      const next = prev === 'es' ? 'en' : 'es';
+      localStorage.setItem('lang', next);
+      return next;
+    });
   };
 
-  const t = (key: string): string => {
-    const value = translations[language][key as keyof typeof translations[typeof language]];
-    if (typeof value === 'string') return value;
-    return key;
+  const t = (key: string): string | string[] => {
+    const value = translations[language][key];
+    return value ?? key;
   };
 
   return (

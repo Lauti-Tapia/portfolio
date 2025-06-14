@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
 
 interface AccordionProps {
   title: string;
@@ -12,7 +11,6 @@ interface AccordionProps {
 
 export default function Accordion({ title, children, defaultOpen = false }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const { t } = useLanguage();
 
   return (
     <div className="w-full border border-gray-700 rounded-lg overflow-hidden">
