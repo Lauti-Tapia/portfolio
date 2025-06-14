@@ -10,7 +10,9 @@ import { useLanguage, LanguageProvider } from './context/LanguageContext';
 
 function HomeContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentProject, setCurrentProject] = useState<'powerbi' | 'civi'>('powerbi');
   const { t, language, toggleLanguage } = useLanguage();
+  const [showDescription, setShowDescription] = useState(false);
 
   // Refs para cada sección
   const inicioRef = useRef<HTMLDivElement>(null);
@@ -277,67 +279,194 @@ function HomeContent() {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-6xl w-full border border-gray-800">
+        <div className="bg-[#181c24] shadow-2xl rounded-2xl p-10 max-w-5xl w-full border border-gray-800 flex flex-col items-center relative">
           <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-blue-400">{t('projects.title')}</h2>
-          <div className="space-y-12">
-            {/* Power BI Project */}
-            <div className="bg-[#23283a] rounded-xl p-6 shadow-lg border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4">
-                {t('projects.powerbi.title')}
-              </h3>
-              <Accordion title={t('projects.powerbi.description.button')}>
-                <div className="text-gray-400 space-y-3">
-                  <p>
-                    <b>Descripción del proyecto y técnica utilizada:</b> Como parte de este proyecto realicé, por primera vez, una experiencia completa de web scraping para obtener datos históricos del fútbol argentino. Utilicé Python, Selenium y BeautifulSoup para automatizar la navegación por el sitio fbref.com y descargar, año por año, las tablas estadísticas de la Liga Profesional Argentina entre 2016 y 2024. Toda esa información fue procesada automáticamente y exportada en archivos .csv, que luego utilicé como fuente principal en Power BI para desarrollar visualizaciones interactivas. El proceso completo lo realicé en un día, y me permitió vincular programación con análisis visual de datos en un contexto real.
-                  </p>
-                  <p>
-                    <b>📊 Análisis comparativo de los dashboards:</b> Los informes están divididos en dos vistas principales:
-                    <ul className="list-disc list-inside ml-6 mt-2">
-                      <li>Los cinco grandes del fútbol argentino</li>
-                      <li>El resto de los equipos</li>
-                    </ul>
-                  </p>
-                  <div>
-                    <b>🔵 Visualización de los 5 grandes</b>
-                    <ul className="list-disc list-inside ml-6 mt-2">
-                      <li>Boca Juniors y River Plate lideran en cantidad de partidos ganados entre 2016 y 2024.</li>
-                      <li>Se observa una tendencia estable y competitiva en el tiempo en las posiciones de ambos.</li>
-                      <li>San Lorenzo e Independiente muestran mayor irregularidad, con altibajos en su rendimiento.</li>
-                      <li>El gráfico de líneas permite identificar momentos de recuperación o caída, como la mejora de Racing entre 2020 y 2022.</li>
-                    </ul>
+          {/* Carrusel de proyectos */}
+          {(() => {
+            // Definir los proyectos, Civi siempre primero
+            const projects = [
+              {
+                key: 'civi',
+                title: 'Civi – CV Creator with AI',
+                description: (
+                  <div className="mb-8">
+                    <Accordion title="Show project description">
+                      <div className="text-gray-400 space-y-3">
+                        {language === 'es' ? (
+                          <>
+                            <p>
+                              CIVI es una aplicación web que desarrollé de forma independiente con un objetivo claro: ayudar a las personas a mejorar su CV de manera inteligente, sin depender de plantillas genéricas o herramientas pagas.
+                            </p>
+                            <p>
+                              La idea surgió al notar que muchos candidatos con buenas trayectorias no sabían cómo adaptar su currículum a cada oferta laboral. Decidí combinar mis conocimientos en desarrollo web y automatización 🤖 para crear una herramienta gratuita, accesible y útil. El resultado fue una plataforma que analiza la descripción del puesto y genera un CV optimizado en tiempo real, aumentando las chances de superar filtros automáticos (ATS) y destacar frente a recruiters.
+                            </p>
+                            <p>
+                              Desde lo técnico, el proyecto fue una gran experiencia fullstack 🚀: usé Next.js, React, TypeScript, Tailwind CSS y Radix UI para construir una interfaz moderna, accesible y responsive. La integración con Groq AI (Llama3-70B) me permitió aplicar procesamiento de lenguaje natural de forma eficiente y en segundos. Todo se ejecuta en el navegador, sin almacenar datos ni requerir cuentas.
+                            </p>
+                            <p>
+                              CIVI refleja no solo lo que sé hacer técnicamente, sino también mi interés por construir soluciones que tengan impacto real ✨. Fue un proyecto desafiante, donde resolví problemas de UX, integración de IA y rendimiento, y lo llevé de idea a producto funcional con despliegue en Vercel.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              CIVI is a web application I developed independently with a clear goal: to help people improve their CVs intelligently, without relying on generic templates or paid tools.
+                            </p>
+                            <p>
+                              The idea came from noticing that many candidates with strong backgrounds didn't know how to tailor their resumes to each job offer. I decided to combine my knowledge in web development and automation with artificial intelligence 🤖 to create a free, accessible, and useful tool. The result is a platform that analyzes the job description and generates an optimized CV in real time, increasing the chances of passing ATS filters and standing out to recruiters.
+                            </p>
+                            <p>
+                              From a technical perspective, the project was a great fullstack experience 🚀: I used Next.js, React, TypeScript, Tailwind CSS, and Radix UI to build a modern, accessible, and responsive interface. The integration with Groq AI (Llama3-70B) allowed me to apply natural language processing efficiently and in seconds. Everything runs in the browser, with no data storage or account required.
+                            </p>
+                            <p>
+                              CIVI reflects not only my technical skills, but also my interest in building solutions that have a real impact ✨. It was a challenging project where I solved UX, AI integration, and performance issues, taking it from idea to a functional product deployed on Vercel.
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </Accordion>
                   </div>
-                  <div>
-                    <b>🟡 Visualización de los no grandes</b>
-                    <ul className="list-disc list-inside ml-6 mt-2">
-                      <li>Estudiantes, Defensa y Justicia y Godoy Cruz son los equipos con mejor desempeño acumulado en partidos ganados.</li>
-                      <li>La diversidad de trayectorias es mucho mayor: se observan equipos que sólo estuvieron en algunos años y otros con presencia sostenida.</li>
-                      <li>Algunos equipos como Atlético Tucumán o Lanús mantuvieron una regularidad destacable en posiciones, aunque sin competir directamente con los grandes.</li>
-                      <li>El volumen de goles a favor y en contra permite ver que, aunque el nivel de competencia es alto, la diferencia de goles en contra es considerablemente mayor que entre los 5 grandes.</li>
-                    </ul>
+                ),
+                preview: (
+                  <div className="w-full aspect-video rounded-lg overflow-hidden shadow-lg mb-6" style={{height: '600px'}}>
+                    <iframe
+                      src="https://civi-cv-creator.vercel.app/"
+                      allowFullScreen
+                      className="w-full h-full border-0 rounded-lg"
+                      title="Civi App Preview"
+                    ></iframe>
                   </div>
-                </div>
-              </Accordion>
-              <div className="w-full max-w-6xl mx-auto aspect-[5/1] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-lg mt-6">
-                <iframe
-                  src="https://app.powerbi.com/reportEmbed?reportId=fd61d2df-2d2e-4191-9e04-2a5a131a9ae5&autoAuth=true&ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&actionBarEnabled=true&reportCopilotInEmbed=true"
-                  allowFullScreen
-                  className="w-full h-full border-0"
-                  title={t('projects.powerbi.iframe.title')}
-                ></iframe>
-              </div>
-              <p className="text-gray-500 text-xs mt-4">
-                {t('projects.powerbi.disclaimer')} <br />
-                <a
-                  href="https://app.powerbi.com/links/aSwFdI8zJz?ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&pbi_source=linkShare"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 underline hover:text-blue-200 ml-1"
+                ),
+                action: (
+                  <a
+                    href="https://civi-cv-creator.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
+                  >
+                    Visit Civi
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                )
+              },
+              {
+                key: 'powerbi',
+                title: t('projects.powerbi.title'),
+                description: (
+                  <div className="mb-8">
+                    <Accordion title={t('projects.powerbi.description.button')}>
+                      <div className="text-gray-400 space-y-3">
+                        <p>
+                          <b>Descripción del proyecto y técnica utilizada:</b> Como parte de este proyecto realicé, por primera vez, una experiencia completa de web scraping para obtener datos históricos del fútbol argentino. Utilicé Python, Selenium y BeautifulSoup para automatizar la navegación por el sitio fbref.com y descargar, año por año, las tablas estadísticas de la Liga Profesional Argentina entre 2016 y 2024. Toda esa información fue procesada automáticamente y exportada en archivos .csv, que luego utilicé como fuente principal en Power BI para desarrollar visualizaciones interactivas. El proceso completo lo realicé en un día, y me permitió vincular programación con análisis visual de datos en un contexto real.
+                        </p>
+                        <p>
+                          <b>📊 Análisis comparativo de los dashboards:</b> Los informes están divididos en dos vistas principales:
+                          <ul className="list-disc list-inside ml-6 mt-2">
+                            <li>Los cinco grandes del fútbol argentino</li>
+                            <li>El resto de los equipos</li>
+                          </ul>
+                        </p>
+                        <div>
+                          <b>🔵 Visualización de los 5 grandes</b>
+                          <ul className="list-disc list-inside ml-6 mt-2">
+                            <li>Boca Juniors y River Plate lideran en cantidad de partidos ganados entre 2016 y 2024.</li>
+                            <li>Se observa una tendencia estable y competitiva en el tiempo en las posiciones de ambos.</li>
+                            <li>San Lorenzo e Independiente muestran mayor irregularidad, con altibajos en su rendimiento.</li>
+                            <li>El gráfico de líneas permite identificar momentos de recuperación o caída, como la mejora de Racing entre 2020 y 2022.</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <b>🟡 Visualización de los no grandes</b>
+                          <ul className="list-disc list-inside ml-6 mt-2">
+                            <li>Estudiantes, Defensa y Justicia y Godoy Cruz son los equipos con mejor desempeño acumulado en partidos ganados.</li>
+                            <li>La diversidad de trayectorias es mucho mayor: se observan equipos que sólo estuvieron en algunos años y otros con presencia sostenida.</li>
+                            <li>Algunos equipos como Atlético Tucumán o Lanús mantuvieron una regularidad destacable en posiciones, aunque sin competir directamente con los grandes.</li>
+                            <li>El volumen de goles a favor y en contra permite ver que, aunque el nivel de competencia es alto, la diferencia de goles en contra es considerablemente mayor que entre los 5 grandes.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </Accordion>
+                  </div>
+                ),
+                preview: (
+                  <div className="w-full aspect-[5/1] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-lg mb-6" style={{height: '400px'}}>
+                    <iframe
+                      src="https://app.powerbi.com/reportEmbed?reportId=fd61d2df-2d2e-4191-9e04-2a5a131a9ae5&autoAuth=true&ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&actionBarEnabled=true&reportCopilotInEmbed=true"
+                      allowFullScreen
+                      className="w-full h-full border-0"
+                      title={t('projects.powerbi.iframe.title')}
+                    ></iframe>
+                  </div>
+                ),
+                action: (
+                  <a
+                    href="https://app.powerbi.com/links/aSwFdI8zJz?ctid=eebbc370-5762-4be4-ad34-12c2bd661f3d&pbi_source=linkShare"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
+                  >
+                    {t('projects.powerbi.link')}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                ),
+                disclaimer: (
+                  <p className="text-gray-500 text-xs mt-4 text-center">
+                    {t('projects.powerbi.disclaimer')}
+                  </p>
+                )
+              }
+            ];
+            const [current, setCurrent] = useState(0);
+            const goPrev = () => setCurrent((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+            const goNext = () => setCurrent((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+            return (
+              <div className="w-full flex flex-col items-center relative">
+                {/* Botón izquierdo */}
+                <button
+                  onClick={goPrev}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  aria-label="Previous project"
                 >
-                  {t('projects.powerbi.link')}
-                </a>
-              </p>
-            </div>
-          </div>
+                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                {/* Card animada */}
+                <motion.div
+                  key={projects[current].key}
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="bg-[#23283a] rounded-xl p-6 shadow-lg border border-gray-700 flex flex-col w-full max-w-4xl mx-auto"
+                >
+                  <h3 className="text-xl font-semibold mb-4 text-center">{projects[current].title}</h3>
+                  {projects[current].description}
+                  {projects[current].preview}
+                  <div className="flex justify-center mt-auto">
+                    {projects[current].action}
+                  </div>
+                  {projects[current].disclaimer}
+                </motion.div>
+                {/* Botón derecho */}
+                <button
+                  onClick={goNext}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  aria-label="Next project"
+                >
+                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            );
+          })()}
         </div>
       </motion.section>
 
