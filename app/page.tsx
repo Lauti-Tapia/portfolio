@@ -10,9 +10,8 @@ import { useLanguage, LanguageProvider } from './context/LanguageContext';
 
 function HomeContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentProject, setCurrentProject] = useState<'powerbi' | 'civi'>('powerbi');
   const { t, language, toggleLanguage } = useLanguage();
-  const [showDescription, setShowDescription] = useState(false);
+  const [currentProject, setCurrentProject] = useState(0);
 
   // Refs para cada sección
   const inicioRef = useRef<HTMLDivElement>(null);
@@ -36,10 +35,12 @@ function HomeContent() {
   };
 
   // Agrega scroll-behavior: smooth al body
-  type GlobalAny = any;
   if (typeof window !== 'undefined') {
     document.body.style.scrollBehavior = 'smooth';
   }
+
+  const goPrev = () => setCurrentProject((prev) => (prev === 0 ? 1 : prev - 1));
+  const goNext = () => setCurrentProject((prev) => (prev === 1 ? 0 : prev + 1));
 
   return (
     <main className="pt-10 bg-[#0a0a23] min-h-screen">
@@ -287,10 +288,10 @@ function HomeContent() {
             const projects = [
               {
                 key: 'civi',
-                title: 'Civi – CV Creator with AI',
+                title: language === 'es' ? 'Civi – Creador de CV con IA' : 'Civi – CV Creator with AI',
                 description: (
                   <div className="mb-8">
-                    <Accordion title="Show project description">
+                    <Accordion title={language === 'es' ? 'Descripción del proyecto' : 'Show project description'}>
                       <div className="text-gray-400 space-y-3">
                         {language === 'es' ? (
                           <>
@@ -313,7 +314,7 @@ function HomeContent() {
                               CIVI is a web application I developed independently with a clear goal: to help people improve their CVs intelligently, without relying on generic templates or paid tools.
                             </p>
                             <p>
-                              The idea came from noticing that many candidates with strong backgrounds didn't know how to tailor their resumes to each job offer. I decided to combine my knowledge in web development and automation with artificial intelligence 🤖 to create a free, accessible, and useful tool. The result is a platform that analyzes the job description and generates an optimized CV in real time, increasing the chances of passing ATS filters and standing out to recruiters.
+                              The idea came from noticing that many candidates with strong backgrounds didn&apos;t know how to tailor their resumes to each job offer. I decided to combine my knowledge in web development and automation with artificial intelligence 🤖 to create a free, accessible, and useful tool. The result is a platform that analyzes the job description and generates an optimized CV in real time, increasing the chances of passing ATS filters and standing out to recruiters.
                             </p>
                             <p>
                               From a technical perspective, the project was a great fullstack experience 🚀: I used Next.js, React, TypeScript, Tailwind CSS, and Radix UI to build a modern, accessible, and responsive interface. The integration with Groq AI (Llama3-70B) allowed me to apply natural language processing efficiently and in seconds. Everything runs in the browser, with no data storage or account required.
@@ -344,7 +345,7 @@ function HomeContent() {
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-10 py-4 rounded-full text-white font-semibold flex items-center gap-3 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200"
                   >
-                    Visit Civi
+                    {language === 'es' ? 'Visitar Civi' : 'Visit Civi'}
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
@@ -382,7 +383,7 @@ function HomeContent() {
                           <b>🟡 Visualización de los no grandes</b>
                           <ul className="list-disc list-inside ml-6 mt-2">
                             <li>Estudiantes, Defensa y Justicia y Godoy Cruz son los equipos con mejor desempeño acumulado en partidos ganados.</li>
-                            <li>La diversidad de trayectorias es mucho mayor: se observan equipos que sólo estuvieron en algunos años y otros con presencia sostenida.</li>
+                            <li>La diversidad de trayectorias es mucho mayor: se observan equipos que s&oacute;lo estuvieron en algunos años y otros con presencia sostenida.</li>
                             <li>Algunos equipos como Atlético Tucumán o Lanús mantuvieron una regularidad destacable en posiciones, aunque sin competir directamente con los grandes.</li>
                             <li>El volumen de goles a favor y en contra permite ver que, aunque el nivel de competencia es alto, la diferencia de goles en contra es considerablemente mayor que entre los 5 grandes.</li>
                           </ul>
@@ -422,9 +423,6 @@ function HomeContent() {
                 )
               }
             ];
-            const [current, setCurrent] = useState(0);
-            const goPrev = () => setCurrent((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
-            const goNext = () => setCurrent((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
             return (
               <div className="w-full flex flex-col items-center relative">
                 {/* Botón izquierdo */}
@@ -439,20 +437,20 @@ function HomeContent() {
                 </button>
                 {/* Card animada */}
                 <motion.div
-                  key={projects[current].key}
+                  key={projects[currentProject].key}
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -40 }}
                   transition={{ duration: 0.4, ease: 'easeInOut' }}
                   className="bg-[#23283a] rounded-xl p-6 shadow-lg border border-gray-700 flex flex-col w-full max-w-4xl mx-auto"
                 >
-                  <h3 className="text-xl font-semibold mb-4 text-center">{projects[current].title}</h3>
-                  {projects[current].description}
-                  {projects[current].preview}
+                  <h3 className="text-xl font-semibold mb-4 text-center">{projects[currentProject].title}</h3>
+                  {projects[currentProject].description}
+                  {projects[currentProject].preview}
                   <div className="flex justify-center mt-auto">
-                    {projects[current].action}
+                    {projects[currentProject].action}
                   </div>
-                  {projects[current].disclaimer}
+                  {projects[currentProject].disclaimer}
                 </motion.div>
                 {/* Botón derecho */}
                 <button

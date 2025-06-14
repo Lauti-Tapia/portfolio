@@ -3,10 +3,6 @@
 import Accordion from './Accordion';
 import { useLanguage } from '../context/LanguageContext';
 
-interface TranslationPoints {
-  [key: string]: string[];
-}
-
 export default function PowerBIDescription() {
   const { t } = useLanguage();
 
