@@ -39,8 +39,8 @@ function HomeContent() {
     document.body.style.scrollBehavior = 'smooth';
   }
 
-  const goPrev = () => setCurrentProject((prev) => (prev === 0 ? 1 : prev - 1));
-  const goNext = () => setCurrentProject((prev) => (prev === 1 ? 0 : prev + 1));
+  const goPrev = () => setCurrentProject((prev) => (prev === 0 ? 2 : prev - 1));
+  const goNext = () => setCurrentProject((prev) => (prev === 2 ? 0 : prev + 1));
 
   return (
     <main className="pt-10 bg-[#0a0a23] min-h-screen">
@@ -420,6 +420,120 @@ function HomeContent() {
                   <p className="text-gray-500 text-xs mt-3 sm:mt-4 text-center px-2">
                     {t('projects.powerbi.disclaimer')}
                   </p>
+                )
+              },
+              {
+                key: 'boolingsearch',
+                title: t('projects.boolingsearch.title'),
+                description: (
+                  <div className="mb-4 sm:mb-6 md:mb-8">
+                    <Accordion title={t('projects.boolingsearch.description.button')}>
+                      <div className="text-gray-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
+                        {language === 'es' ? (
+                          <>
+                            <p>
+                              ¿Qué pasaría si pudieras convertir una necesidad de contratación en una búsqueda precisa para LinkedIn, con solo escribirla en lenguaje natural?
+                            </p>
+                            <p>
+                              Eso es exactamente lo que hace BoolingSearch: una herramienta web que desarrollé para ayudar a reclutadores y equipos de HR a optimizar el proceso de búsqueda de candidatos.
+                            </p>
+                            <p>
+                              A través de una pipeline de pensamiento automatizada, la herramienta interpreta lo que escribís (por ejemplo: "UX designers in Argentina who use Figma or Sketch") y lo convierte en una búsqueda booleana lista para pegar en LinkedIn, agrupando correctamente roles, habilidades y ubicaciones, validando la sintaxis, y ofreciendo sugerencias para mejorar los resultados.
+                            </p>
+                            <p>
+                              <b>¿Por qué la hice?</b><br/>
+                              Durante la creación de otros proyectos noté que muchas personas de HR sabían qué perfil querían, pero no cómo buscarlo correctamente en plataformas como LinkedIn. Armar búsquedas booleanas puede ser una barrera técnica. BoolingSearch elimina esa fricción.
+                            </p>
+                            <p>
+                              <b>Principales funcionalidades</b><br/>
+                              ✅ Conversión de lenguaje natural a booleano<br/>
+                              ✅ Corrección automática y validación en tiempo real<br/>
+                              ✅ Interfaz minimalista, responsive y bilingüe (ES/EN)<br/>
+                              ✅ Copia directa y sugerencias de optimización<br/>
+                              ✅ Modal inteligente de donación tras varios usos
+                            </p>
+                            <p>
+                              <b>Impacto para RRHH y Talent Acquisition</b><br/>
+                              • Ahorra tiempo al iterar búsquedas complejas<br/>
+                              • Mejora la calidad de los resultados<br/>
+                              • Evita errores comunes de sintaxis<br/>
+                              • Democratiza el uso de filtros avanzados sin necesidad de experiencia técnica
+                            </p>
+                            <p>
+                              <b>Tecnologías utilizadas</b><br/>
+                              Frontend: Next.js · React · Tailwind CSS<br/>
+                              Backend: Node.js · Groq API<br/>
+                              Despliegue: Vercel
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              What if you could convert a hiring need into a precise LinkedIn search just by writing it in natural language?
+                            </p>
+                            <p>
+                              That's exactly what BoolingSearch does: a web tool I developed to help recruiters and HR teams optimize the candidate search process.
+                            </p>
+                            <p>
+                              Through an automated thinking pipeline, the tool interprets what you write (for example: "UX designers in Argentina who use Figma or Sketch") and converts it into a boolean search ready to paste into LinkedIn, properly grouping roles, skills, and locations, validating syntax, and offering suggestions to improve results.
+                            </p>
+                            <p>
+                              <b>Why did I make it?</b><br/>
+                              During the creation of other projects, I noticed that many HR professionals knew what profile they wanted, but not how to search for it correctly on platforms like LinkedIn. Building boolean searches can be a technical barrier. BoolingSearch eliminates that friction.
+                            </p>
+                            <p>
+                              <b>Main features</b><br/>
+                              ✅ Natural language to boolean conversion<br/>
+                              ✅ Automatic correction and real-time validation<br/>
+                              ✅ Minimalist, responsive, and bilingual interface (ES/EN)<br/>
+                              ✅ Direct copy and optimization suggestions<br/>
+                              ✅ Smart donation modal after several uses
+                            </p>
+                            <p>
+                              <b>Impact for HR and Talent Acquisition</b><br/>
+                              • Saves time when iterating complex searches<br/>
+                              • Improves result quality<br/>
+                              • Avoids common syntax errors<br/>
+                              • Democratizes the use of advanced filters without requiring technical experience
+                            </p>
+                            <p>
+                              <b>Technologies used</b><br/>
+                              Frontend: Next.js · React · Tailwind CSS<br/>
+                              Backend: Node.js · Groq API<br/>
+                              Deployment: Vercel
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </Accordion>
+                  </div>
+                ),
+                preview: (
+                  <a href="https://boolin-search.vercel.app/" target="_blank" rel="noopener noreferrer" className="block group">
+                    <div className="w-full rounded-lg overflow-hidden shadow-lg mb-4 sm:mb-6 relative bg-black/20 p-4" style={{height: 'min(60vh, 400px)'}}>
+                      <Image
+                        src="/boolingSearch.png"
+                        alt="BoolingSearch App Preview"
+                        layout="fill"
+                        objectFit="contain"
+                        className="rounded-lg transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  </a>
+                ),
+                action: (
+                  <a
+                    href="https://boolin-search.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
+                  >
+                    {t('projects.boolingsearch.link')}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 )
               }
             ];
