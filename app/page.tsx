@@ -41,8 +41,9 @@ function HomeContent() {
     document.body.style.scrollBehavior = 'smooth';
   }
 
-  const goPrev = () => setCurrentProject((prev) => (prev === 0 ? 2 : prev - 1));
-  const goNext = () => setCurrentProject((prev) => (prev === 2 ? 0 : prev + 1));
+  const totalProjects = 4;
+  const goPrev = () => setCurrentProject((prev) => (prev === 0 ? totalProjects - 1 : prev - 1));
+  const goNext = () => setCurrentProject((prev) => (prev === totalProjects - 1 ? 0 : prev + 1));
 
   return (
     <main className="pt-10 bg-[#0a0a23] min-h-screen">
@@ -158,7 +159,7 @@ function HomeContent() {
             return (
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 text-center text-white drop-shadow-lg leading-tight max-w-4xl mx-auto">
                 {before}
-                <span className="text-blue-500">{name}</span>
+                <span className="gradient-text">{name}</span>
                 {after}
               </h1>
             );
@@ -336,11 +337,12 @@ function HomeContent() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-blue-400 px-2">{t('projects.title')}</h2>
           {/* Carrusel de proyectos */}
           {(() => {
-            // Definir los proyectos, Civi siempre primero
+            // Definir los proyectos, declar.ar siempre primero
             const projects = [
               {
-                key: 'civi',
-                title: language === 'es' ? 'Civi – Creador de CV con IA' : 'Civi – CV Creator with AI',
+                key: 'declarar',
+                title: language === 'es' ? 'declar.ar – Sistema de Facturación Online' : 'declar.ar – Online Invoicing System',
+                tech: ['Angular', 'ASP.NET', 'SQL Server', 'Mercado Pago API'],
                 description: (
                   <div className="mb-4 sm:mb-6 md:mb-8">
                     <Accordion title={language === 'es' ? 'Descripción del proyecto' : 'Show project description'}>
@@ -348,31 +350,37 @@ function HomeContent() {
                         {language === 'es' ? (
                           <>
                             <p>
-                              CIVI es una aplicación web que desarrollé de forma independiente con un objetivo claro: ayudar a las personas a mejorar su CV de manera inteligente, sin depender de plantillas genéricas o herramientas pagas.
+                              <b>declar.ar</b> es un sistema de facturación online que desarrollé con el objetivo de mejorar la velocidad, organización y eficiencia en la gestión de comprobantes fiscales para empresas y profesionales independientes.
                             </p>
                             <p>
-                              La idea surgió al notar que muchos candidatos con buenas trayectorias no sabían cómo adaptar su currículum a cada oferta laboral. Decidí combinar mis conocimientos en desarrollo web y automatización 🤖 para crear una herramienta gratuita, accesible y útil. El resultado fue una plataforma que analiza la descripción del puesto y genera un CV optimizado en tiempo real, aumentando las chances de superar filtros automáticos (ATS) y destacar frente a recruiters.
+                              La plataforma permite generar distintos tipos de comprobantes: <b>Facturas A, B y C</b>, <b>Notas de Crédito</b> y <b>Notas de Débito</b>, todo desde una interfaz moderna, rápida e intuitiva que simplifica el proceso de facturación.
                             </p>
                             <p>
-                              Desde lo técnico, el proyecto fue una gran experiencia fullstack 🚀: usé Next.js, React, TypeScript, Tailwind CSS y Radix UI para construir una interfaz moderna, accesible y responsive. La integración con Groq AI (Llama3-70B) me permitió aplicar procesamiento de lenguaje natural de forma eficiente y en segundos. Todo se ejecuta en el navegador, sin almacenar datos ni requerir cuentas.
+                              Cuenta con <b>integración directa con Mercado Pago</b>, permitiendo a los usuarios vincular sus cobros con los comprobantes generados, automatizando la conciliación de pagos y ahorrando tiempo administrativo.
                             </p>
                             <p>
-                              CIVI refleja no solo lo que sé hacer técnicamente, sino también mi interés por construir soluciones que tengan impacto real ✨. Fue un proyecto desafiante, donde resolví problemas de UX, integración de IA y rendimiento, y lo llevé de idea a producto funcional con despliegue en Vercel.
+                              Desde lo técnico, el frontend está construido con <b>Angular</b> y el backend con <b>ASP.NET</b>, conectado a <b>SQL Server</b> para el almacenamiento de datos. La arquitectura está pensada para ser escalable, segura y eficiente.
+                            </p>
+                            <p>
+                              declar.ar nace de una necesidad real: simplificar la facturación electrónica en Argentina, brindando una alternativa moderna y accesible a los sistemas tradicionales.
                             </p>
                           </>
                         ) : (
                           <>
                             <p>
-                              CIVI is a web application I developed independently with a clear goal: to help people improve their CVs intelligently, without relying on generic templates or paid tools.
+                              <b>declar.ar</b> is an online invoicing system I developed to improve speed, organization, and efficiency in tax document management for businesses and independent professionals.
                             </p>
                             <p>
-                              The idea came from noticing that many candidates with strong backgrounds didn&apos;t know how to tailor their resumes to each job offer. I decided to combine my knowledge in web development and automation with artificial intelligence 🤖 to create a free, accessible, and useful tool. The result is a platform that analyzes the job description and generates an optimized CV in real time, increasing the chances of passing ATS filters and standing out to recruiters.
+                              The platform allows generating different types of documents: <b>Invoices (A, B, and C types)</b>, <b>Credit Notes</b>, and <b>Debit Notes</b>, all from a modern, fast, and intuitive interface that simplifies the invoicing process.
                             </p>
                             <p>
-                              From a technical perspective, the project was a great fullstack experience 🚀: I used Next.js, React, TypeScript, Tailwind CSS, and Radix UI to build a modern, accessible, and responsive interface. The integration with Groq AI (Llama3-70B) allowed me to apply natural language processing efficiently and in seconds. Everything runs in the browser, with no data storage or account required.
+                              It features <b>direct integration with Mercado Pago</b>, allowing users to link their payments with generated documents, automating payment reconciliation and saving administrative time.
                             </p>
                             <p>
-                              CIVI reflects not only my technical skills, but also my interest in building solutions that have a real impact ✨. It was a challenging project where I solved UX, AI integration, and performance issues, taking it from idea to a functional product deployed on Vercel.
+                              On the technical side, the frontend is built with <b>Angular</b> and the backend with <b>ASP.NET</b>, connected to <b>SQL Server</b> for data storage. The architecture is designed to be scalable, secure, and efficient.
+                            </p>
+                            <p>
+                              declar.ar was born from a real need: simplifying electronic invoicing in Argentina, providing a modern and accessible alternative to traditional systems.
                             </p>
                           </>
                         )}
@@ -383,21 +391,21 @@ function HomeContent() {
                 preview: (
                   <div className="w-full rounded-lg overflow-hidden shadow-lg mb-4 sm:mb-6" style={{height: 'min(60vh, 400px)'}}>
                     <iframe
-                      src="https://civi-cv-creator.vercel.app/"
+                      src="https://declar.ar/"
                       allowFullScreen
                       className="w-full h-full border-0 rounded-lg"
-                      title="Civi App Preview"
+                      title="declar.ar App Preview"
                     ></iframe>
                   </div>
                 ),
                 action: (
                   <a
-                    href="https://civi-cv-creator.vercel.app/"
+                    href="https://declar.ar/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
+                    className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
                   >
-                    {language === 'es' ? 'Visitar Civi' : 'Visit Civi'}
+                    {language === 'es' ? 'Visitar declar.ar' : 'Visit declar.ar'}
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
@@ -408,6 +416,7 @@ function HomeContent() {
               {
                 key: 'powerbi',
                 title: t('projects.powerbi.title'),
+                tech: ['Python', 'Selenium', 'BeautifulSoup', 'Power BI', 'SQL'],
                 description: (
                   <div className="mb-4 sm:mb-6 md:mb-8">
                     <Accordion title={t('projects.powerbi.description.button')}>
@@ -477,6 +486,7 @@ function HomeContent() {
               {
                 key: 'boolingsearch',
                 title: t('projects.boolingsearch.title'),
+                tech: ['Next.js', 'React', 'Tailwind CSS', 'Node.js', 'Groq API'],
                 description: (
                   <div className="mb-4 sm:mb-6 md:mb-8">
                     <Accordion title={t('projects.boolingsearch.description.button')}>
@@ -587,14 +597,81 @@ function HomeContent() {
                     </svg>
                   </a>
                 )
+              },
+              {
+                key: 'civi',
+                title: language === 'es' ? 'Civi – Creador de CV con IA' : 'Civi – CV Creator with AI',
+                tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Groq API', 'Llama3-70B'],
+                description: (
+                  <div className="mb-4 sm:mb-6 md:mb-8">
+                    <Accordion title={language === 'es' ? 'Descripción del proyecto' : 'Show project description'}>
+                      <div className="text-gray-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
+                        {language === 'es' ? (
+                          <>
+                            <p>
+                              CIVI es una aplicación web que desarrollé de forma independiente con un objetivo claro: ayudar a las personas a mejorar su CV de manera inteligente, sin depender de plantillas genéricas o herramientas pagas.
+                            </p>
+                            <p>
+                              La plataforma analiza la descripción del puesto y genera un CV optimizado en tiempo real, aumentando las chances de superar filtros automáticos (ATS) y destacar frente a recruiters.
+                            </p>
+                            <p>
+                              Desde lo técnico, usé Next.js, React, TypeScript, Tailwind CSS y Radix UI. La integración con Groq AI (Llama3-70B) permite procesamiento de lenguaje natural de forma eficiente y en segundos. Todo se ejecuta en el navegador, sin almacenar datos ni requerir cuentas.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              CIVI is a web application I developed independently with a clear goal: to help people improve their CVs intelligently, without relying on generic templates or paid tools.
+                            </p>
+                            <p>
+                              The platform analyzes the job description and generates an optimized CV in real time, increasing the chances of passing ATS filters and standing out to recruiters.
+                            </p>
+                            <p>
+                              On the technical side, I used Next.js, React, TypeScript, Tailwind CSS, and Radix UI. The Groq AI (Llama3-70B) integration enables efficient natural language processing in seconds. Everything runs in the browser, with no data storage or account required.
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </Accordion>
+                  </div>
+                ),
+                preview: (
+                  <div className="w-full rounded-lg overflow-hidden shadow-lg mb-4 sm:mb-6" style={{height: 'min(60vh, 400px)'}}>
+                    <iframe
+                      src="https://civi-cv-creator.vercel.app/"
+                      allowFullScreen
+                      className="w-full h-full border-0 rounded-lg"
+                      title="Civi App Preview"
+                    ></iframe>
+                  </div>
+                ),
+                action: (
+                  <a
+                    href="https://civi-cv-creator.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full text-white font-semibold flex items-center gap-2 sm:gap-3 text-base sm:text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transform hover:-translate-y-1 hover:scale-105 hover:shadow-2xl duration-200 w-full sm:w-auto justify-center"
+                  >
+                    {language === 'es' ? 'Visitar Civi' : 'Visit Civi'}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                )
               }
             ];
+            const totalProjects = projects.length;
             return (
               <div className="w-full flex flex-col items-center relative">
+                {/* Contador de proyecto */}
+                <div className="mb-4 text-sm text-gray-400 font-mono">
+                  {currentProject + 1} / {totalProjects}
+                </div>
                 {/* Botón izquierdo */}
                 <button
                   onClick={goPrev}
-                  className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 bg-[#23283a]/80 backdrop-blur border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-600 hover:border-blue-500 transition-all z-10"
                   aria-label="Previous project"
                 >
                   <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -610,7 +687,17 @@ function HomeContent() {
                   transition={{ duration: 0.4, ease: 'easeInOut' }}
                   className="bg-[#23283a] rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-lg border border-gray-700 flex flex-col w-full max-w-4xl mx-auto"
                 >
-                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center px-2">{projects[currentProject].title}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center px-2">{projects[currentProject].title}</h3>
+                  {/* Tech badges */}
+                  {projects[currentProject].tech && (
+                    <div className="flex flex-wrap justify-center gap-2 mb-4">
+                      {projects[currentProject].tech.map((t: string, i: number) => (
+                        <span key={i} className="bg-blue-500/15 text-blue-300 px-2.5 py-0.5 rounded-full text-xs border border-blue-500/25 font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   {projects[currentProject].description}
                   {projects[currentProject].preview}
                   <div className="flex justify-center mt-4 sm:mt-auto">
@@ -618,10 +705,25 @@ function HomeContent() {
                   </div>
                   {projects[currentProject].disclaimer}
                 </motion.div>
+                {/* Dot indicators */}
+                <div className="flex gap-2 mt-6">
+                  {projects.map((p, i) => (
+                    <button
+                      key={p.key}
+                      onClick={() => setCurrentProject(i)}
+                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                        i === currentProject
+                          ? 'bg-blue-500 w-8'
+                          : 'bg-gray-600 hover:bg-gray-400'
+                      }`}
+                      aria-label={`Go to project ${i + 1}`}
+                    />
+                  ))}
+                </div>
                 {/* Botón derecho */}
                 <button
                   onClick={goNext}
-                  className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 bg-[#23283a] border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-700 transition z-10"
+                  className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 bg-[#23283a]/80 backdrop-blur border border-gray-700 rounded-full p-2 sm:p-3 shadow-lg hover:bg-blue-600 hover:border-blue-500 transition-all z-10"
                   aria-label="Next project"
                 >
                   <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
