@@ -6,9 +6,9 @@ import { LanguageProvider } from "./context/LanguageContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lautaro Tapia - Data Analyst & Data Engineer",
-  description: "Portfolio profesional de Lautaro Tapia, especialista en análisis de datos e ingeniería de datos. Explora mis proyectos y experiencia en el campo de los datos.",
-  keywords: "data analyst, data engineer, portfolio, análisis de datos, ingeniería de datos",
+  title: "Lautaro Tapia - Senior BI Consultant",
+  description: "Portfolio profesional de Lautaro Tapia, Senior BI Consultant con +4 años de experiencia en Power BI, DAX, SQL y modelado dimensional. Especializado en soluciones analíticas para la toma de decisiones estratégicas.",
+  keywords: "senior bi consultant, business intelligence, power bi, dax, sql, data analyst, portfolio, análisis de datos, modelado dimensional, etl",
 };
 
 export default function RootLayout({

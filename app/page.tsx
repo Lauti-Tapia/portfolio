@@ -17,6 +17,7 @@ function HomeContent() {
   const inicioRef = useRef<HTMLDivElement>(null);
   const sobreMiRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
+  const experienciaRef = useRef<HTMLDivElement>(null);
   const proyectosRef = useRef<HTMLDivElement>(null);
   const contactoRef = useRef<HTMLDivElement>(null);
 
@@ -24,6 +25,7 @@ function HomeContent() {
     { href: '#inicio', label: t('nav.home'), ref: inicioRef },
     { href: '#sobremi', label: t('nav.about'), ref: sobreMiRef },
     { href: '#background', label: t('nav.background'), ref: backgroundRef },
+    { href: '#experiencia', label: t('nav.experience'), ref: experienciaRef },
     { href: '#proyectos', label: t('nav.projects'), ref: proyectosRef },
     { href: '#contacto', label: t('nav.contact'), ref: contactoRef },
   ];
@@ -168,7 +170,7 @@ function HomeContent() {
             href="#proyectos"
             className="bg-blue-600 hover:bg-blue-700 transition px-6 sm:px-8 py-3 sm:py-4 rounded-full text-white font-semibold text-base sm:text-lg shadow-lg"
           >
-            Ver proyectos
+            {t('hero.cta')}
           </a>
         </div>
       </section>
@@ -244,28 +246,78 @@ function HomeContent() {
       >
         <div className="bg-[#181c24] shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10 max-w-6xl w-full border border-gray-800">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-blue-400 text-center">{t('background.title')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {/* Tarjeta 1 - Formación */}
             <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">🎓 {t('background.title')}</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">
-                {t('background.education')}
-              </p>
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">🎓 {t('background.educationTitle')}</h3>
+              <div className="text-gray-400 text-xs sm:text-sm space-y-1">
+                {t('background.education').split('\n').map((line: string, i: number) => (
+                  <p key={i}>{line}</p>
+                ))}
+              </div>
             </div>
             {/* Tarjeta 2 - Tecnologías */}
             <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">💻 Tecnologías</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">💻 {t('background.technologiesTitle')}</h3>
               <p className="text-gray-400 text-xs sm:text-sm">
                 {t('background.technologies')}
               </p>
             </div>
             {/* Tarjeta 3 - Experiencia */}
             <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">📊 Experiencia</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">📊 {t('background.experienceTitle')}</h3>
               <p className="text-gray-400 text-xs sm:text-sm">
                 {t('background.experience')}
               </p>
             </div>
+            {/* Tarjeta 4 - Certificaciones */}
+            <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg hover:scale-105 transition border border-gray-700">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">📜 {t('background.certificationsTitle')}</h3>
+              <div className="text-gray-400 text-xs sm:text-sm space-y-1">
+                {t('background.certifications').split('\n').map((line: string, i: number) => (
+                  <p key={i}>{line}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Experiencia Laboral */}
+      <motion.section
+        id="experiencia"
+        ref={experienciaRef}
+        className="flex justify-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 text-white"
+        aria-label="Sección de experiencia laboral"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7 }}
+      >
+        <div className="bg-[#181c24] shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10 max-w-4xl w-full border border-gray-800">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-blue-400 text-center">{t('experience.title')}</h2>
+          <div className="relative border-l-2 border-blue-500/40 ml-4 sm:ml-6">
+            {(['danwor', 'bridgeinvest', 'totvs', 'exxon', 'pwc'] as const).map((key) => (
+              <div key={key} className="mb-8 sm:mb-10 ml-6 sm:ml-8 relative">
+                <div className="absolute -left-[33px] sm:-left-[41px] top-1 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-[#181c24]"></div>
+                <div className="bg-[#23283a] p-4 sm:p-6 rounded-lg sm:rounded-xl border border-gray-700 shadow-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-1">
+                    <h3 className="text-base sm:text-lg font-bold text-white">
+                      {t(`experience.${key}.company`)} – <span className="text-blue-300">{t(`experience.${key}.role`)}</span>
+                    </h3>
+                    <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">{t(`experience.${key}.period`)}</span>
+                  </div>
+                  <ul className="text-gray-400 text-xs sm:text-sm space-y-2 mt-3">
+                    {t(`experience.${key}.bullets`).split('\n').map((bullet: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1 shrink-0">&#9656;</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </motion.section>
